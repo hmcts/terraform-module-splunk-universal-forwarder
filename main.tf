@@ -1,6 +1,6 @@
 resource "azurerm_virtual_machine_scale_set_extension" "splunk-uf" {
 
-  count = var.is_resource_vm ? 1 : 0
+  count = var.is_resource_vmss ? 1 : 0
 
   name                         = var.extension_name
   virtual_machine_scale_set_id = var.virtual_machine_scale_set_id
@@ -18,7 +18,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "splunk-uf" {
 
 resource "azurerm_virtual_machine_extension" "splunk-uf" {
 
-  count = var.is_resource_vmss ? 1 : 0
+  count = var.is_resource_vm ? 1 : 0
 
   name                       = var.extension_name
   virtual_machine_id         = var.virtual_machine_id
