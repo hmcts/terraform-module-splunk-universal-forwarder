@@ -48,14 +48,16 @@ variable "splunk_key_vault_id" {
 
 variable "type_handler_version" {
   description = "Type handler version number"
-  default = "2.1"
+  default     = "2.1"
 }
 
 variable "virtual_machine_scale_set_id" {
   description = "Virtual machine scale set resource id."
+  default     = ""
 }
 
 variable "virtual_machine_id" {
   description = "Virtual machine resource id."
+  default     = ""
 }
 
