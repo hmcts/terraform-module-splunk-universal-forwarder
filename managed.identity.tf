@@ -13,7 +13,7 @@ resource "azurerm_key_vault_access_policy" "splunk_vault" {
 
   provider     = azurerm.splunk
   key_vault_id = var.splunk_key_vault_id
-  object_id    = azurerm_user_assigned_identity.mi[0].principal_id
+  object_id    = azurerm_user_assigned_identity.mi[count.index].principal_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
 
   secret_permissions = [
