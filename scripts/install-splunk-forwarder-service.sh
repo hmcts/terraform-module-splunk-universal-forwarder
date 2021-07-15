@@ -7,6 +7,8 @@ INSTALL_LOCATION="/opt"
 KEYVAULT="soc-prod"
 UF_USERNAME_KV_SECRET="splunk-gui-admin-username"
 UF_PASSWORD_KV_SECRET="splunk-gui-admin-password"
+DEPLOYMENT_SERVER_URI="splunk-cm-prod-vm00.platform.hmcts.net:9997"
+FORWARD_SERVER_URI="splunk-lm-prod-vm00.platform.hmcts.net:9997"
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
@@ -32,10 +34,10 @@ $SPLUNK_HOME/bin/splunk start --accept-license --no-prompt
 $SPLUNK_HOME/bin/splunk set servername $hostname
 
 # Set deployment server
-$SPLUNK_HOME/bin/splunk set deploy-poll splunk-cm-prod-vm00.platform.hmcts.net:9997
+$SPLUNK_HOME/bin/splunk set deploy-poll $DEPLOYMENT_SERVER_URI
 
 # Set forward-server
-$SPLUNK_HOME/bin/splunk add forward-server splunk-lm-prod-vm00.platform.hmcts.net:9997
+$SPLUNK_HOME/bin/splunk add forward-server $FORWARD_SERVER_URI
 
 # Create splunk admin user
 {
