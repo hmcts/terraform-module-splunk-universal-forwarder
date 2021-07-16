@@ -1,3 +1,4 @@
 locals {
-  cse_script  = "${path.module}/scripts/install-splunk-forwarder-service.sh ${data.azurerm_key_vault_secret.splunk_username.value} ${data.azurerm_key_vault_secret.splunk_password.value}"
+  cse_script  = "./${var.script_name} ${data.azurerm_key_vault_secret.splunk_username.value} ${data.azurerm_key_vault_secret.splunk_password.value}"
+  script_uri  = "https://raw.githubusercontent.com/hmcts/terraform-module-splunk-universal-forwarder/master/scripts/${var.script_name}"
 }

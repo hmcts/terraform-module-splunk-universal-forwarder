@@ -42,9 +42,9 @@ variable "splunk_password_secret" {
   type        = string
 }
 
-variable "script_uri" {
-  description = "Public github location of splunk universal forwarder install script"
-  default     = "https://raw.githubusercontent.com/hmcts/terraform-module-splunk-universal-forwarder/master/scripts/install-splunk-forwarder-service.sh"
+variable "script_name" {
+  description = "Splunk universal forwarder install script stored in public Github repository"
+  default     = "install-splunk-forwarder-service.sh"
   type        = string
 }
 
