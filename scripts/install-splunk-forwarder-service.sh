@@ -4,23 +4,12 @@ set -e
 DOWNLOAD_URL="https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.2.0&product=universalforwarder&filename=splunkforwarder-8.2.0-e053ef3c985f-Linux-x86_64.tgz&wget=true"
 INSTALL_FILE="splunkforwarder-8.2.0-e053ef3c985f-Linux-x86_64.tgz"
 INSTALL_LOCATION="/opt"
-KEYVAULT="soc-prod"
-UF_USERNAME_KV_SECRET="splunk-gui-admin-username"
-UF_PASSWORD_KV_SECRET="splunk-gui-admin-password"
+UF_USERNAME=$1
+UF_PASSWORD=$2
 DEPLOYMENT_SERVER_URI="splunk-cm-prod-vm00.platform.hmcts.net:9997"
 FORWARD_SERVER_URI="splunk-lm-prod-vm00.platform.hmcts.net:9997"
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
-
-# Retrieve secrets
-TOKEN_REQUEST="$(curl -s 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true)"
-ACCESS_TOKEN="$(echo $TOKEN_REQUEST | cut -d \" -f 4)"
-UF_USERNAME_REQUEST="$(curl -s "https://$KEYVAULT.vault.azure.net/secrets/$UF_USERNAME_KV_SECRET?api-version=2016-10-01" -H "Authorization: Bearer $ACCESS_TOKEN")"
-UF_USERNAME="$(echo $UF_USERNAME_REQUEST | cut -d \" -f 4)"
-
-UF_PASSWORD_REQUEST="$(curl -s "https://$keyvault.vault.azure.net/secrets/$UF_PASSWORD_KV_SECRET?api-version=2016-10-01" -H "Authorization: Bearer $ACCESS_TOKEN")"
-UF_PASSWORD="$(echo $UF_UF_PASSWORD_REQUEST | cut -d \" -f 4)"
-
 
 # Install splunk forwarder
 curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
