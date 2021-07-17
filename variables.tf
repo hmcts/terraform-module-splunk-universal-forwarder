@@ -56,11 +56,13 @@ variable "type_handler_version" {
 
 variable "virtual_machine_scale_set_id" {
   description = "Virtual machine scale set resource id."
+  default     = ""
   type        = string
 }
 
 variable "virtual_machine_id" {
   description = "Virtual machine resource id."
+  default     = ""
   type        = string
 }
 
