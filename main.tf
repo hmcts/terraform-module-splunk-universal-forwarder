@@ -11,7 +11,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "splunk-uf" {
 
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "fileUris": ["${local.script_uri}"]
+      "fileUris": ["${local.script_uri}"],
       "commandToExecute": "${local.cse_script}"
     }
     PROTECTED_SETTINGS
@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
 
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "fileUris": ["${local.script_uri}"]
+      "fileUris": ["${local.script_uri}"],
       "commandToExecute": "${local.cse_script}"
     }
     PROTECTED_SETTINGS
