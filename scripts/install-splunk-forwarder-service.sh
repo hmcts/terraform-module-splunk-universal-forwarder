@@ -20,14 +20,14 @@ rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
-  $SPLUNK_HOME/bin/splunk/stop
+  $SPLUNK_HOME/bin/splunk stop
   sleep 10
 fi
 
 # Create splunk admin user
 {
 cat <<EOF
-[user-info]
+[user_info]
 USERNAME = $UF_USERNAME
 HASHED_PASSWORD = $($SPLUNK_HOME/bin/splunk hash-passwd $UF_PASSWORD)
 EOF
@@ -49,6 +49,7 @@ $SPLUNK_HOME/bin/splunk add forward-server $FORWARD_SERVER_URI
 
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
+$SPLUNK_HOME/bin/splunk disable boot-start
 sleep 10
 $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
 chown -R splunk:splunk $SPLUNK_HOME
