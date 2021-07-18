@@ -22,23 +22,13 @@ variable "is_resource_vmss" {
   type        = bool
 }
 
-variable "splunk_vault_name" {
-  description = "Name of keyvault storing splunk secrets."
+variable "splunk_username" {
+  description = "Splunk universal forwarder local admin username - read input from keyvault."
   type        = string
 }
 
-variable "splunk_vault_rg" {
-  description = "Resource group name of keyvault storing splunk secrets."
-  type        = string
-}
-
-variable "splunk_username_secret" {
-  description = "Splunk universal forwarder local admin username key vault secret name ."
-  type        = string
-}
-
-variable "splunk_password_secret" {
-  description = "Splunk universal forwarder local admin password key vault secret name."
+variable "splunk_password" {
+  description = "Splunk universal forwarder local admin password - read input from keyvault."
   type        = string
 }
 
