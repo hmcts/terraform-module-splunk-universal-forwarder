@@ -40,12 +40,13 @@ $SPLUNK_HOME/bin/splunk start --accept-license --no-prompt --answer-yes
 
 # Set server name
 $SPLUNK_HOME/bin/splunk set servername $hostname -auth $UF_USERNAME:$UF_PASSWORD
+$SPLUNK_HOME/bin/splunk restart
 
 # Set deployment server
-$SPLUNK_HOME/bin/splunk set deploy-poll $DEPLOYMENT_SERVER_URI
+$SPLUNK_HOME/bin/splunk set deploy-poll $DEPLOYMENT_SERVER_URI -auth $UF_USERNAME:$UF_PASSWORD
 
 # Set forward-server
-$SPLUNK_HOME/bin/splunk add forward-server $FORWARD_SERVER_URI
+$SPLUNK_HOME/bin/splunk add forward-server $FORWARD_SERVER_URI -auth $UF_USERNAME:$UF_PASSWORD
 
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
