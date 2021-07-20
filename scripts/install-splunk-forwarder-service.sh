@@ -86,4 +86,3 @@ $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group
 chown -R splunk:splunk $SPLUNK_HOME
 
 $SPLUNK_HOME/bin/splunk start
-}
