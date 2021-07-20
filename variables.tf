@@ -20,6 +20,11 @@ variable "splunk_password" {
   type        = string
 }
 
+variable "splunk_pass4symmkey" {
+  description = "Splunk universal forwarder communication security key - read input from keyvault."
+  type        = string
+}
+
 variable "script_name" {
   description = "Splunk universal forwarder install script stored in public Github repository"
   default     = "install-splunk-forwarder-service.sh"
