@@ -64,11 +64,11 @@ EOF
 {
 cat <<EOF
 [indexer_discovery:hmcts_cluster_manager]
-pass4SymmKey = UF_PASS4SYMMKEY
+pass4SymmKey = $UF_PASS4SYMMKEY
 master_uri = https://$FORWARD_SERVER_URI
 
 [tcpout:dynatrace_forwarders]
-server = FORWARD_SERVER_URI
+server = $FORWARD_SERVER_URI
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
