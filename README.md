@@ -18,6 +18,7 @@ No provider.
 | extension_name | VM extension name label. | `string` | splunk-universal-forwarder| no |
 | splunk_username | Splunk universal forwarder local admin username - value should be passed from keyvault secret | `string` | n/a | yes |
 | splunk_password | Splunk universal forwarder local admin password - value should be passed from keyvault secret | `string` | n/a | yes |
+| splunk_pass4symmkey | Splunk universal forwarder communication security key - value should be passed from keyvault secret | `string` | n/a | yes |
 | type_handler_version | VM extension type handler version | `string` | 2.1 | no |
 | virtual_machine_type | Identifies whether target resource is 'vm' or 'vmss' | `string` | n/a | yes |
 | virtual_machine_id | Virtual machine resource id | `string` | n/a | yes |
