@@ -68,6 +68,7 @@ pass4SymmKey = UF_PASS4SYMMKEY
 master_uri = https://$FORWARD_SERVER_URI
 
 [tcpout:dynatrace_forwarders]
+server = FORWARD_SERVER_URI
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
