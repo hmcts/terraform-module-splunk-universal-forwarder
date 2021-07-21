@@ -44,8 +44,6 @@ $SPLUNK_HOME/bin/splunk set servername $hostname -auth $UF_USERNAME:$UF_PASSWORD
 $SPLUNK_HOME/bin/splunk restart
 
 # Configure deploymentclient.conf
-# $SPLUNK_HOME/bin/splunk set deploy-poll $DEPLOYMENT_SERVER_URI -auth $UF_USERNAME:$UF_PASSWORD
-
 {
 cat <<EOF
 [deployment-client]
@@ -57,10 +55,7 @@ EOF
 } > $SPLUNK_HOME/etc/system/local/deploymentclient.conf
 
 
-
 # Configure outputs.conf
-# $SPLUNK_HOME/bin/splunk add forward-server $FORWARD_SERVER_URI -auth $UF_USERNAME:$UF_PASSWORD
-
 {
 cat <<EOF
 [indexer_discovery:hmcts_cluster_manager]
