@@ -63,7 +63,6 @@ pass4SymmKey = $UF_PASS4SYMMKEY
 master_uri = https://$FORWARD_SERVER_URI
 
 [tcpout:dynatrace_forwarders]
-server = $FORWARD_SERVER_URI
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
@@ -81,4 +80,10 @@ sleep 10
 $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
 chown -R splunk:splunk $SPLUNK_HOME
 
+# Add monitors
+if [  -d "/var/log/dynatrace"  ]; then
+  $SPLUNK_HOME/bin/splunk add monitor '/var/log/dynatrace/gateway/*.log' -index common_dynatrace -sourcetype dynatrace:activegateclient
+fi
+
 $SPLUNK_HOME/bin/splunk start
+
