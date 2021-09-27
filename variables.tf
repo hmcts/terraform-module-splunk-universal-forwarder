@@ -25,6 +25,12 @@ variable "splunk_pass4symmkey" {
   type        = string
 }
 
+variable "splunk_group" {
+  description = "Splunk universal forwarder global target group."
+  default     = "dynatrace_forwarders"
+  type        = string
+}
+
 variable "script_name" {
   description = "Splunk universal forwarder install script stored in public Github repository"
   default     = "install-splunk-forwarder-service.sh"
@@ -53,4 +59,3 @@ variable "virtual_machine_id" {
   default     = ""
   type        = string
 }
-

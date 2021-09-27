@@ -8,6 +8,7 @@ FORWARD_SERVER_URI="splunk-cm-prod-vm00.platform.hmcts.net:8089"
 UF_USERNAME=$1
 UF_PASSWORD=$2
 UF_PASS4SYMMKEY=$3
+UF_GROUP=$4
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
@@ -62,14 +63,14 @@ cat <<EOF
 pass4SymmKey = $UF_PASS4SYMMKEY
 master_uri = https://$FORWARD_SERVER_URI
 
-[tcpout:dynatrace_forwarders]
+[tcpout:$UF_GROUP]
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
 useACK=true
 
 [tcpout]
-defaultGroup = dynatrace_forwarders
+defaultGroup = $UF_GROUP
 EOF
 } > $SPLUNK_HOME/etc/system/local/outputs.conf
 
@@ -81,4 +82,3 @@ $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group
 chown -R splunk:splunk $SPLUNK_HOME
 
 $SPLUNK_HOME/bin/splunk start
-
