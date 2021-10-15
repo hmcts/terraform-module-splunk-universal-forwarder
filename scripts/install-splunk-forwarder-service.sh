@@ -13,7 +13,8 @@ UF_GROUP=$4
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
 # Create boot-start systemd user
-adduser --system --group splunk
+groupadd -f splunk
+id -u splunk >/dev/null 2>&1 || useradd splunk -g splunk
 
 # Install splunk forwarder
 curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
