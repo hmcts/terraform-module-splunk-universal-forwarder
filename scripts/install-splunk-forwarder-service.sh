@@ -22,6 +22,9 @@ tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
 rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
+# Grant splunk user read access to logs
+setfacl -R -m u:splunk:r /var/log
+
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
   $SPLUNK_HOME/bin/splunk stop
   sleep 10
