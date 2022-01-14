@@ -4,8 +4,10 @@
 
 param 
 ( 
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunkPassword,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$username
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_username,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_password,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_pass4symmkey,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_group
 )
 
 $password = ConvertTo-SecureString -AsPlainText $splunkPassword -Force
@@ -20,7 +22,7 @@ $msiArguments = @(
     "AGREETOLICENSE=Yes" 
     "SERVICESTARTTYPE=AUTO" 
     "LAUNCHSPLUNK=1" 
-    "SPLUNKUSERNAME=$username"
+    "SPLUNKUSERNAME=$splunkUsername"
     "SPLUNKPASSWORD=$password" 
     "/quiet"
 )
@@ -35,5 +37,3 @@ If ((Get-Service -name splunkforwarder).Status -ne "Running") {
   }
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation successful"
-Write-Host "this is the" $username
-Write-Host "this is the" $splunkPassword
