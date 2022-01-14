@@ -57,7 +57,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf-windows" {
 }
 
 data "template_file" "tf" {
-    template = "${file("./scripts/install-splunk-forwarder-service.ps1")}"
+    template = "${file("https://raw.githubusercontent.com/hmcts/terraform-module-splunk-universal-forwarder/master/scripts/install-splunk-forwarder-service.ps1")}"
     vars = {
         username                    = "${var.splunk_username}"
         password                    = "${var.splunk_password}"
