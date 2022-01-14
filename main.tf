@@ -56,8 +56,8 @@ resource "azurerm_virtual_machine_extension" "splunk-uf-windows" {
 
 }
 
-data "local_file" "tf" {
-    template = "${file("scripts/install-splunk-forwarder-service.ps1")}"
+data "template_file" "tf" {
+    template = "${file("${path.module}/scripts/install-splunk-forwarder-service.ps1")}"
     vars = {
         username                    = "${var.splunk_username}"
         password                    = "${var.splunk_password}"
