@@ -36,6 +36,10 @@ variable "script_name" {
   default     = "install-splunk-forwarder-service.sh"
   type        = string
 }
+variable "os_type" {
+  description = "linux or windows"
+  type        = string
+}
 
 variable "type_handler_version" {
   description = "Type handler version number"
