@@ -22,7 +22,7 @@ $msiArguments = @(
     "AGREETOLICENSE=Yes" 
     "SERVICESTARTTYPE=AUTO" 
     "LAUNCHSPLUNK=1" 
-    "SPLUNKUSERNAME=$splunkUsername"
+    "SPLUNKUSERNAME=$splunk_username"
     "SPLUNKPASSWORD=$password" 
     "/quiet"
 )
