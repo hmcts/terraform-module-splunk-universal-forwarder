@@ -51,7 +51,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf-windows" {
     { 
         "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.tf.rendered)}')) | Out-File -filepath \scripts\install-splunk-forwarder-service.ps1\" && powershell -ExecutionPolicy Unrestricted -File \scripts\install-splunk-forwarder-service.ps1 -username ${data.template_file.tf.vars.username} -password ${data.template_file.tf.vars.password} -pass4symmkey ${data.template_file.tf.vars.pass4symmkey} -splunk_group ${data.template_file.tf.vars.group}"
      
-    }s
+    }
     SETTINGS
 
 }
