@@ -36,11 +36,6 @@ variable "script_name" {
   default     = "install-splunk-forwarder-service.sh"
   type        = string
 }
-variable "os_type" {
-  description = "linux or windows"
-  type        = string
-}
-
 variable "type_handler_version" {
   description = "Type handler version number"
   default     = "2.1"
@@ -58,6 +53,10 @@ variable "virtual_machine_scale_set_id" {
   type        = string
 }
 
+variable "virtual_machine_os" {
+  description = "Windows or Linux."
+  type        = string
+}
 variable "virtual_machine_id" {
   description = "Virtual machine resource id."
   default     = ""
