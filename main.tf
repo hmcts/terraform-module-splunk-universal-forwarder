@@ -38,7 +38,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
 
 resource "azurerm_virtual_machine_extension" "splunk-uf-windows" {
 
-  count =  var.virtual_machine_os == "Windows" ? 1 : 0
+  count =  var.os_type == "Windows" ? 1 : 0
 
   name                       = var.extension_name
   virtual_machine_id         = var.virtual_machine_id
