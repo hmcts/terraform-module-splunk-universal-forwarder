@@ -47,15 +47,14 @@ variable "virtual_machine_type" {
   type        = string
 }
 
-variable "virtual_machine_scale_set_id" {
-  description = "Virtual machine scale set resource id."
-  default     = ""
+variable "os_type" {
+  description = "Windows or Linux."
   type        = string
 }
 
-variable "os_type" {
-  description = "Windows or Linux."
-  default = null
+variable "virtual_machine_scale_set_id" {
+  description = "Virtual machine scale set resource id."
+  default     = ""
   type        = string
 }
 variable "virtual_machine_id" {
