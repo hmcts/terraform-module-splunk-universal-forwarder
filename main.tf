@@ -27,11 +27,10 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   type                       = "CustomScript"
   type_handler_version       = var.type_handler_version
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
-  settings = <<PROTECTED_SETTINGS
+  protected_settings = <<PROTECTED_SETTINGS
     {
-      "fileUris": "${local.script_uri}",
+      "fileUris": ["${local.script_uri}",
       "commandToExecute": "${local.cse_script}"
-      "commandToExecute": "${local.ps_script}"
     }
     PROTECTED_SETTINGS
 }
