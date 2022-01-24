@@ -29,12 +29,9 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
   settings = <<PROTECTED_SETTINGS
     {
-      %{if var.os_type == "Linux"}
       "fileUris": "${local.script_uri}",
       "commandToExecute": "${local.cse_script}"
-      %{else}
       "commandToExecute": "${local.ps_script}"
-      %{endif}
     }
     PROTECTED_SETTINGS
 }
