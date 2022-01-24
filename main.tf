@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   protected_settings = <<PROTECTED_SETTINGS
     {
       %{if var.os_type == "Linux"}
-      "fileUris": ["${local.script_uri}"],
+      "fileUris": "${local.script_uri}",
       "commandToExecute": "${local.cse_script}"
       %{else}
       "commandToExecute": "${local.ps_script}"
