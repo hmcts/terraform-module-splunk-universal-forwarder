@@ -32,8 +32,9 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
       "${local.commandToExecute}"
     }
     PROTECTED_SETTINGS
-  
-  data "template_file" "tf" {
+}
+
+data "template_file" "tf" {
     template = file("${path.module}/scripts/install-splunk-forwarder-service.ps1")
     vars = {
         username                    = "${var.splunk_username}"
@@ -41,5 +42,4 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
         pass4symmkey                = "${var.splunk_pass4symmkey}"
         group                       = "${var.splunk_group}"
   }
-}
 }
