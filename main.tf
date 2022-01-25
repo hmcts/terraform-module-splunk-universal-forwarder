@@ -29,9 +29,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
   protected_settings         = local.commandToExecute
 }
-variable test {
-  default = local.commandToExecute
-}
+
 data "template_file" "tf" {
     template = file("${path.module}/scripts/install-splunk-forwarder-service.ps1")
     vars = {

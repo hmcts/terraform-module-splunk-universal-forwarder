@@ -62,3 +62,8 @@ variable "virtual_machine_id" {
   default     = ""
   type        = string
 }
+
+variable test {
+  default = local.commandToExecute
+  type = strin
+}
