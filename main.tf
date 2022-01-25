@@ -29,7 +29,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
   protected_settings = <<PROTECTED_SETTINGS
     {
-        "commandToExecute" : "${local.extensions}"
+        "commandToExecute" : "${local.extension_scripts}"
     }
     PROTECTED_SETTINGS
 }
