@@ -46,12 +46,6 @@ variable "virtual_machine_type" {
   description = "vm or vmss."
   type        = string
 }
-
-variable "os_type" {
-  description = "Windows or Linux."
-  type        = string
-}
-
 variable "virtual_machine_scale_set_id" {
   description = "Virtual machine scale set resource id."
   default     = ""
@@ -61,9 +55,4 @@ variable "virtual_machine_id" {
   description = "Virtual machine resource id."
   default     = ""
   type        = string
-}
-
-variable test {
-  default = local.commandToExecute
-  type = strin
 }

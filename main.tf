@@ -23,19 +23,15 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
 
   name                       = var.extension_name
   virtual_machine_id         = var.virtual_machine_id
-  publisher                  = lower(var.os_type) == "linux" ? "Microsoft.Azure.Extensions" : lower(var.os_type) == "windows" ? "Microsoft.Compute" : null
-  type                       = lower(var.os_type) == "linux" ? "CustomScript" : lower(var.os_type) == "windows" ? "CustomScriptExtension" : null
+  publisher                  = "Microsoft.Azure.Extensions"
+  type                       = "CustomScript"
   type_handler_version       = var.type_handler_version
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
-  protected_settings         = local.commandToExecute
-}
-
-data "template_file" "tf" {
-    template = file("${path.module}/scripts/install-splunk-forwarder-service.ps1")
-    vars = {
-        username                    = "${var.splunk_username}"
-        password                    = "${var.splunk_password}"
-        pass4symmkey                = "${var.splunk_pass4symmkey}"
-        group                       = "${var.splunk_group}"
-  }
+  
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+      "fileUris": ["${local.script_uri}"],
+      "commandToExecute": "${local.cse_script}"
+    }
+    PROTECTED_SETTINGS
 }
