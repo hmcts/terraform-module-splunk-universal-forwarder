@@ -29,12 +29,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
   protected_settings = <<PROTECTED_SETTINGS
     {
-      %{if var.os_type == "Linux"}
-      "fileUris": "${local.script_uri}",
-      "commandToExecute": "${local.cse_script}"
-      %{else}
-      "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.tf.rendered)}')) | Out-File -filepath install-splunk-forwarder-service.ps1\" && powershell -ExecutionPolicy Unrestricted -File install-splunk-forwarder-service.ps1 -username ${data.template_file.tf.vars.username} -password ${data.template_file.tf.vars.password} -pass4symmkey ${data.template_file.tf.vars.pass4symmkey} -group ${data.template_file.tf.vars.group}"
-      %{endif}
+      "${local.commandToExecute}"
     }
     PROTECTED_SETTINGS
 }
