@@ -33,7 +33,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
       "fileUris": "${local.script_uri}",
       "commandToExecute": "${local.cse_script}"
       %{else}
-      local.ps_script
+      "commandToExecute": "${local.ps_script}"
       %{endif}
     }
     SETTINGS
