@@ -6,4 +6,15 @@ locals {
   }) 
   commandToExecute = var.os_type == "Linux" ? local.cse_script && local.script_uri : local.ps_script
 
+
+data "template_file" "tf" {
+    template = file("${path.module}/scripts/install-splunk-forwarder-service.ps1")
+    vars = {
+        username                    = "${var.splunk_username}"
+        password                    = "${var.splunk_password}"
+        pass4symmkey                = "${var.splunk_pass4symmkey}"
+        group                       = "${var.splunk_group}"
+  }
+}
+
 }
