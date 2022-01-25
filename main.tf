@@ -27,11 +27,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   type                       = "CustomScript"
   type_handler_version       = var.type_handler_version
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
-  protected_settings = <<PROTECTED_SETTINGS
-    {
-      "${local.commandToExecute}"
-    }
-    PROTECTED_SETTINGS
+  protected_settings = local.commandToExecute
 }
 
 data "template_file" "tf" {
