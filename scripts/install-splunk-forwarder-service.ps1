@@ -4,13 +4,12 @@
 
 param 
 ( 
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_username,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_password,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_pass4symmkey,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$splunk_group
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$username,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$password,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$pass4symmkey,
+    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$group
 )
 
-$password = ConvertTo-SecureString -AsPlainText $splunkPassword -Force
 $msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/windows/splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
 $msiFile = $env:Temp + "\splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
 $receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:8089'
@@ -25,7 +24,7 @@ $msiArguments = @(
     "AGREETOLICENSE=Yes" 
     "SERVICESTARTTYPE=AUTO" 
     "LAUNCHSPLUNK=1" 
-    "SPLUNKUSERNAME=$splunk_username"
+    "SPLUNKUSERNAME=$username"
     "SPLUNKPASSWORD=$password" 
     "/quiet"
 )
@@ -46,15 +45,15 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring outsputs.conf"
 
 @"
 indexer_discovery:hmcts_cluster_manager]
-pass4SymmKey = $splunk_pass4symmkey
+pass4SymmKey = $pass4symmkey
 master_uri = "https://$receiver" 
 
-[tcpout:$splunk_group]
+[tcpout:$group]
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
 useACK=true
       
 [tcpout]
-defaultGroup = $splunk_group
+defaultGroup = $group
 "@ > "C:\Program Files\SplunkUniversalForwarder\etc\system\local\outputs.conf"
