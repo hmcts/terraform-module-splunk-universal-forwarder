@@ -10,7 +10,7 @@ param
     [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$group
 )
 
-$msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/windows/splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
+$msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $msiFile = $env:Temp + "\splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
 $receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:8089'
 $msiArguments = @(
@@ -44,7 +44,7 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring outsputs.conf"
 # Configure outputs.conf
 
 @"
-indexer_discovery:hmcts_cluster_manager]
+[indexer_discovery:hmcts_cluster_manager]
 pass4SymmKey = $pass4symmkey
 master_uri = "https://$receiver" 
 
