@@ -31,7 +31,7 @@ $msiArguments = @(
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Splunk"
 [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 (New-Object System.Net.WebClient).DownloadFile($msiDownload, $msiFile)
-Start-Process -FilePath "c:\windows\system32\msiexec.exe" -ArgumentList '/i', "$msiFile", "$msiArguments" -Wait -Verbose -Verb RunAs
+Start-Process -FilePath "c:\windows\system32\msiexec.exe" -ArgumentList '/i', "$msiFile", "$msiArguments" -Wait -Verbose
 
 If ((Get-Service -name splunkforwarder).Status -ne "Running") {
     throw "Splunk forwarder service not running"
