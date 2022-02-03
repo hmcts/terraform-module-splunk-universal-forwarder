@@ -47,7 +47,6 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring outsputs.conf"
 [indexer_discovery:hmcts_cluster_manager]
 pass4SymmKey = $pass4symmkey
 master_uri = "https://$receiver" 
-
 [tcpout:$group]
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
