@@ -10,13 +10,6 @@ param
     [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$group
 )
 
-$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
-$testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-if ($testadmin -eq $false) {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
-    exit $LASTEXITCODE
-}
-
 $msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $msiFile = $env:Temp + "\splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:8089'
@@ -38,7 +31,7 @@ $msiArguments = @(
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Splunk"
 [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 (New-Object System.Net.WebClient).DownloadFile($msiDownload, $msiFile)
-Start-Process -FilePath "c:\windows\system32\msiexec.exe" -ArgumentList '/i', "$msiFile", "$msiArguments" -Wait -Verbose
+Start-Process -FilePath "c:\windows\system32\msiexec.exe" -ArgumentList '/i', "$msiFile", "$msiArguments" -Wait -Verbose -Verb RunAs
 
 If ((Get-Service -name splunkforwarder).Status -ne "Running") {
     throw "Splunk forwarder service not running"
