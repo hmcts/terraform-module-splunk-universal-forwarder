@@ -42,8 +42,19 @@ variable "type_handler_version" {
   type        = string
 }
 
+variable "type_handler_version_windows" {
+  description = "Type handler version number for Windows VMs"
+  default     = "1.9"
+  type        = string
+}
+
 variable "virtual_machine_type" {
   description = "vm or vmss."
+  type        = string
+}
+
+variable "os_type" {
+  description = "Windows or Linux."
   type        = string
 }
 variable "virtual_machine_scale_set_id" {
