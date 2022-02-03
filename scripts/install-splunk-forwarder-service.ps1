@@ -10,7 +10,7 @@ param
     [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$splunk_group
 )
 
-$password = ConvertTo-SecureString -AsPlainText $splunkPassword -Force
+$password = ConvertTo-SecureString -AsPlainText $splunk_password -Force
 $msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $msiFile = $env:Temp + "\splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:9997'
