@@ -2,30 +2,37 @@
 
 [CmdletBinding()]
 
-param 
-( 
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$username,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$password,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$pass4symmkey,
-    [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [string]$group
+param
+(
+    [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$username,
+    [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$password,
+    [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$pass4symmkey,
+    [Parameter(ValuefromPipeline = $true, Mandatory = $true)] [string]$group
 )
+
+$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+$testadmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+if ($testadmin -eq $false) {
+    Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+    exit $LASTEXITCODE
+}
 
 $msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $msiFile = $env:Temp + "\splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
 $receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:8089'
 $msiArguments = @(
-    "DEPLOYMENT_SERVER='splunk-lm-prod-vm00.platform.hmcts.net:8089'" 
+    "DEPLOYMENT_SERVER='splunk-lm-prod-vm00.platform.hmcts.net:8089'"
     "RECEIVING_INDEXER=$receiver"
     "WINEVENTLOG_SEC_ENABLE=1"
-    "WINEVENTLOG_SYS_ENABLE=1" 
+    "WINEVENTLOG_SYS_ENABLE=1"
     "WINEVENTLOG_APP_ENABLE=1"
     "WINEVENTLOG_FWD_ENABLE=1"
     "WINEVENTLOG_SET_ENABLE=1"
-    "AGREETOLICENSE=Yes" 
-    "SERVICESTARTTYPE=AUTO" 
-    "LAUNCHSPLUNK=1" 
+    "AGREETOLICENSE=Yes"
+    "SERVICESTARTTYPE=AUTO"
+    "LAUNCHSPLUNK=1"
     "SPLUNKUSERNAME=$username"
-    "SPLUNKPASSWORD=$password" 
+    "SPLUNKPASSWORD=$password"
     "/quiet"
 )
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Splunk"
@@ -35,7 +42,7 @@ Start-Process -FilePath "c:\windows\system32\msiexec.exe" -ArgumentList '/i', "$
 
 If ((Get-Service -name splunkforwarder).Status -ne "Running") {
     throw "Splunk forwarder service not running"
-  }
+}
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk installation successful"
 
@@ -46,13 +53,13 @@ Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring outsputs.conf"
 @"
 [indexer_discovery:hmcts_cluster_manager]
 pass4SymmKey = $pass4symmkey
-master_uri = "https://$receiver" 
+master_uri = "https://$receiver"
 [tcpout:$group]
 autoLBFrequency = 30
 forceTimebasedAutoLB = true
 indexerDiscovery = hmcts_cluster_manager
 useACK=true
-      
+
 [tcpout]
 defaultGroup = $group
 "@ > "C:\Program Files\SplunkUniversalForwarder\etc\system\local\outputs.conf"
