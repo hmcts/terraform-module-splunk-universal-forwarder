@@ -11,22 +11,22 @@ param
 )
 
 $password = ConvertTo-SecureString -AsPlainText $splunkPassword -Force
-$msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/windows/splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
-$msiFile = $env:Temp + "\splunkforwarder-8.2.2.1-ae6821b7c64b-x64-release.msi"
-$receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:8089'
+$msiDownload = "https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
+$msiFile = $env:Temp + "\splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
+$receiver = 'splunk-cm-prod-vm00.platform.hmcts.net:9997'
 $msiArguments = @(
-    "DEPLOYMENT_SERVER='splunk-lm-prod-vm00.platform.hmcts.net:8089'"
+    "DEPLOYMENT_SERVER=splunk-lm-prod-vm00.platform.hmcts.net:8089"
     "RECEIVING_INDEXER=$receiver"
-    "WINEVENTLOG_SEC_ENABLE=1"
-    "WINEVENTLOG_SYS_ENABLE=1"
-    "WINEVENTLOG_APP_ENABLE=1"
-    "WINEVENTLOG_FWD_ENABLE=1"
-    "WINEVENTLOG_SET_ENABLE=1"
-    "AGREETOLICENSE=Yes"
     "SERVICESTARTTYPE=AUTO"
     "LAUNCHSPLUNK=1"
     "SPLUNKUSERNAME=$splunk_username"
     "SPLUNKPASSWORD=$password"
+    "WINEVENTLOG_APP_ENABLE=1"
+    "WINEVENTLOG_SEC_ENABLE=1"
+    "WINEVENTLOG_SYS_ENABLE=1"
+    "WINEVENTLOG_FWD_ENABLE=1"
+    "WINEVENTLOG_SET_ENABLE=1"
+    "AGREETOLICENSE=Yes"
     "/quiet"
 )
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Splunk"
