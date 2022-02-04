@@ -56,6 +56,7 @@ variable "virtual_machine_type" {
 variable "os_type" {
   description = "Windows or Linux."
   type        = string
+  default     = "Linux"
 }
 variable "virtual_machine_scale_set_id" {
   description = "Virtual machine scale set resource id."
