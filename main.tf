@@ -42,10 +42,4 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
 // var.type_handler_version
 data "template_file" "tf" {
   template = file("${path.module}/scripts/install-splunk-forwarder-service.ps1")
-  vars = {
-    username     = "${var.splunk_username}"
-    password     = "${var.splunk_password}"
-    pass4symmkey = "${var.splunk_pass4symmkey}"
-    group        = "${var.splunk_group}"
-  }
 }
