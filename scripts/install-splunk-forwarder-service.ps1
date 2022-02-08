@@ -30,7 +30,7 @@ if ($null -ne $splunk) {
     @"
     [indexer_discovery:hmcts_cluster_manager]
     pass4SymmKey = $pass4symmkey
-    master_uri = https://$receiver
+    manager_uri = https://$receiver
 
     [tcpout:$group]
     autoLBFrequency = 30
