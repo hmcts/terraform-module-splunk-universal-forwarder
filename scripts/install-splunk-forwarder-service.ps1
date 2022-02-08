@@ -11,8 +11,8 @@ param
 # Setup
 $installerURI = 'https://download.splunk.com/products/universalforwarder/releases/8.2.4/windows/splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi'
 $installerFile = $env:Temp + "\splunkforwarder-8.2.4-87e2dda940d1-x64-release.msi"
-$deploymentServer = 'splunk-lm-prod-vm00.platform.hmcts.net:8089'
 $indexServer = 'splunk-cm-prod-vm00.platform.hmcts.net:9997'
+$deploymentServer = 'splunk-lm-prod-vm00.platform.hmcts.net:8089'
 $restartSplunkUF = 'C:\Program` Files\SplunkUniversalForwarder\bin\splunk.exe restart'
 
 # Downloading & Installing Splunk Universal Forwarder
@@ -28,18 +28,18 @@ if ($null -ne $splunk) {
     Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Editing configuration."
 
     @"
-    [indexer_discovery:hmcts_cluster_manager]
-    pass4SymmKey = $pass4symmkey
-    manager_uri = https://$receiver
+[indexer_discovery:hmcts_cluster_manager]
+pass4SymmKey = $pass4symmkey
+manager_uri = https://$indexServer
 
-    [tcpout:$group]
-    autoLBFrequency = 30
-    forceTimebasedAutoLB = true
-    indexerDiscovery = hmcts_cluster_manager
-    useACK=true
+[tcpout:$group]
+autoLBFrequency = 30
+forceTimebasedAutoLB = true
+indexerDiscovery = hmcts_cluster_manager
+useACK=true
 
-    [tcpout]
-    defaultGroup = $group
+[tcpout]
+defaultGroup = $group
 "@ > "C:\Program Files\SplunkUniversalForwarder\etc\system\local\outputs.conf"
 
     Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder restarting to reload configuration."
