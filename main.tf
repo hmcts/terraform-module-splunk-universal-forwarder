@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   protected_settings         = <<PROTECTED_SETTINGS
     {
       %{if var.os_type == "Linux"}
-      "fileUris": "${local.script_uri}",
+      "fileUris": ["${local.script_uri}"],
       "commandToExecute": "${local.cse_script}"
       %{else}
       "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.tf.rendered)}')) | Out-File -filepath install-splunk-forwarder-service.ps1\" && powershell -ExecutionPolicy Unrestricted -File install-splunk-forwarder-service.ps1 -username ${var.splunk_username} -password ${var.splunk_password} -pass4symmkey ${var.splunk_pass4symmkey} -group ${var.splunk_group}"
