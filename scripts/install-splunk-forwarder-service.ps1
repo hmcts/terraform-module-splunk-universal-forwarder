@@ -19,15 +19,11 @@ $restartSplunkUF = 'C:\Program` Files\SplunkUniversalForwarder\bin\splunk.exe re
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Splunk Universal Forwarder installer."
 (New-Object System.Net.WebClient).DownloadFile($installerURI, $installerFile)
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Splunk Universal Forwarder."
-Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerFile DEPLOYMENT_SERVER=$deploymentServer RECEIVING_INDEXER=$indexServer WINEVENTLOG_SEC_ENABLE=1 WINEVENTLOG_SYS_ENABLE=1 WINEVENTLOG_APP_ENABLE=1 WINEVENTLOG_FWD_ENABLE=1 WINEVENTLOG_SET_ENABLE=1 AGREETOLICENSE=Yes SERVICESTARTTYPE=AUTO LAUNCHSPLUNK=1 SPLUNKUSERNAME=$username SPLUNKPASSWORD=$password /quiet" -Wait
+Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerFile DEPLOYMENT_SERVER=$deploymentServer RECEIVING_INDEXER=$indexServer WINEVENTLOG_SEC_ENABLE=1 WINEVENTLOG_SYS_ENABLE=1 WINEVENTLOG_APP_ENABLE=1 WINEVENTLOG_FWD_ENABLE=1 WINEVENTLOG_SET_ENABLE=1 AGREETOLICENSE=Yes SERVICESTARTTYPE=AUTO LAUNCHSPLUNK=0 SPLUNKUSERNAME=$username SPLUNKPASSWORD=$password /quiet" -Wait | Out-Host
 
-# Configuration & Installation verification
-$splunk = Get-Process -Name "splunkd" -ErrorAction SilentlyContinue
-if ($null -ne $splunk) {
-    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder has been installed successfully."
-    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Editing configuration."
-
-    @"
+# Configuration
+Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring Splunk Universal Forwarder."
+@"
 [indexer_discovery:hmcts_cluster_manager]
 pass4SymmKey = $pass4symmkey
 master_uri = https://$indexServer
@@ -42,17 +38,13 @@ useACK=true
 defaultGroup = $group
 "@ > "C:\Program Files\SplunkUniversalForwarder\etc\system\local\outputs.conf"
 
-    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder restarting to reload configuration."
-    Invoke-Expression $restartSplunkUF
-    if ($null -ne $splunk) {
-        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder has been installed and configured successfully."
-        Remove-Item $installerFile
-        exit 0
-    }
-    else {
-        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder restart has failed."
-        exit 1
-    }
+# Installation verification
+Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Starting Splunk Universal Forwarder."
+Invoke-Expression $restartSplunkUF
+$splunk = Get-Process -Name "splunkd" -ErrorAction SilentlyContinue
+if ($null -ne $splunk) {
+    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder has been installed successfully."
+    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Editing configuration."
 }
 else {
     Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Splunk Universal Forwarder installation failed."
