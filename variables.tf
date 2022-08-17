@@ -20,10 +20,10 @@ variable "splunk_password" {
   type        = string
 }
 
-variable "splunk_pass4symmkey" {
-  description = "Splunk universal forwarder communication security key - read input from keyvault."
-  type        = string
-}
+# variable "splunk_pass4symmkey" {
+#   description = "Splunk universal forwarder communication security key - read input from keyvault."
+#   type        = string
+# }
 
 variable "splunk_group" {
   description = "Splunk universal forwarder global target group."
