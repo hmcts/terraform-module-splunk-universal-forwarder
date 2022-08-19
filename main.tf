@@ -28,11 +28,11 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   type_handler_version       = lower(var.os_type) == "linux" ? var.type_handler_version : var.type_handler_version_windows
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
   tags = {
-    application  = "video-hearings-service"
-    builtFrom    = "hmcts/vh-shared-infrastructure"
+    application  = "splunk-extension"
+    builtFrom    = "hmcts/terraform-module-splunk-universal-forwarder"
     businessArea = "Cross-Cutting"
     criticality  = "Low"
-    environment  = "development"
+    environment  = "n/a"
 
   }
   protected_settings = <<PROTECTED_SETTINGS
