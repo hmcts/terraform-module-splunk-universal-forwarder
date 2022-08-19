@@ -20,7 +20,7 @@ variable "splunk_password" {
   type        = string
 }
 
-variable "tags" {
+variable "splunk_tags" {
   description = "tags"
   type        = string
 }
