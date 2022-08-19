@@ -19,7 +19,10 @@ variable "splunk_password" {
   description = "Splunk universal forwarder local admin password - read input from keyvault."
   type        = string
 }
-
+variable "tags" {
+  description = "Splunk tags."
+  type        = map(any)
+}
 
 # variable "splunk_pass4symmkey" {
 #   description = "Splunk universal forwarder communication security key - read input from keyvault."
