@@ -27,8 +27,15 @@ resource "azurerm_virtual_machine_extension" "splunk-uf" {
   type                       = lower(var.os_type) == "linux" ? "CustomScript" : lower(var.os_type) == "windows" ? "CustomScriptExtension" : null
   type_handler_version       = lower(var.os_type) == "linux" ? var.type_handler_version : var.type_handler_version_windows
   auto_upgrade_minor_version = var.auto_upgrade_minor_version
-  tags                       = local.common_tags
-  protected_settings         = <<PROTECTED_SETTINGS
+  tags = {
+    application  = "video-hearings-service"
+    builtFrom    = "hmcts/vh-shared-infrastructure"
+    businessArea = "Cross-Cutting"
+    criticality  = "Low"
+    environment  = "development"
+
+  }
+  protected_settings = <<PROTECTED_SETTINGS
     {
       %{if var.os_type == "Linux"}
       "fileUris": ["${local.script_uri}"],
