@@ -22,6 +22,7 @@ variable "splunk_password" {
 variable "tags" {
   description = "Splunk tags."
   type        = map(any)
+  default     = null
 }
 
 # variable "splunk_pass4symmkey" {
