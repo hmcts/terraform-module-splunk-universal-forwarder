@@ -61,22 +61,22 @@ EOF
 
 
 # Configure outputs.conf
-{
-cat <<EOF
-[indexer_discovery:hmcts_cluster_manager]
-pass4SymmKey = $UF_PASS4SYMMKEY
-master_uri = https://$FORWARD_SERVER_URI
+# {
+# cat <<EOF
+# [indexer_discovery:hmcts_cluster_manager]
+# pass4SymmKey = $UF_PASS4SYMMKEY
+# master_uri = https://$FORWARD_SERVER_URI
 
-[tcpout:$UF_GROUP]
-autoLBFrequency = 30
-forceTimebasedAutoLB = true
-indexerDiscovery = hmcts_cluster_manager
-useACK=true
+# [tcpout:$UF_GROUP]
+# autoLBFrequency = 30
+# forceTimebasedAutoLB = true
+# indexerDiscovery = hmcts_cluster_manager
+# useACK=true
 
-[tcpout]
-defaultGroup = $UF_GROUP
-EOF
-} > $SPLUNK_HOME/etc/system/local/outputs.conf
+# [tcpout]
+# defaultGroup = $UF_GROUP
+# EOF
+# } > $SPLUNK_HOME/etc/system/local/outputs.conf
 
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
