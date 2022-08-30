@@ -25,10 +25,11 @@ variable "tags" {
   default     = null
 }
 
-# variable "splunk_pass4symmkey" {
-#   description = "Splunk universal forwarder communication security key - read input from keyvault."
-#   type        = string
-# }
+variable "splunk_pass4symmkey" {
+  description = "Splunk universal forwarder communication security key - read input from keyvault."
+  type        = string
+  default     = null
+}
 
 variable "splunk_group" {
   description = "Splunk universal forwarder global target group."
