@@ -45,7 +45,7 @@ $SPLUNK_HOME/bin/splunk stop
 $SPLUNK_HOME/bin/splunk start --accept-license --no-prompt --answer-yes
 
 # Set server name
-$SPLUNK_HOME/bin/splunk set servername $hostname -auth $UF_USERNAME:$UF_PASSWORD
+$SPLUNK_HOME/bin/splunk set servername $hostname -auth "$UF_USERNAME:$UF_PASSWORD"
 $SPLUNK_HOME/bin/splunk restart
 
 # Configure deploymentclient.conf
