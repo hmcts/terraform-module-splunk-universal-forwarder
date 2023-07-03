@@ -26,6 +26,7 @@ chown -R splunk:splunk $SPLUNK_HOME
 apt install acl
 
 # Grant splunk user read access to logs
+apt install acl
 setfacl -R -m u:splunk:r /var/log
 
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
