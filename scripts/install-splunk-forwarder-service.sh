@@ -22,6 +22,9 @@ tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
 rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
+#install setfacl
+apt install acl
+
 # Grant splunk user read access to logs
 setfacl -R -m u:splunk:r /var/log
 
