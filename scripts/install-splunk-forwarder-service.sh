@@ -22,10 +22,8 @@ tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
 rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
-#install setfacl
-apt install acl
-
 # Grant splunk user read access to logs
+apt install acl
 setfacl -R -m u:splunk:r /var/log
 
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
@@ -48,7 +46,7 @@ $SPLUNK_HOME/bin/splunk stop
 $SPLUNK_HOME/bin/splunk start --accept-license --no-prompt --answer-yes
 
 # Set server name
-$SPLUNK_HOME/bin/splunk set servername $hostname -auth "$UF_USERNAME:$UF_PASSWORD"
+$SPLUNK_HOME/bin/splunk set servername $hostname -auth $UF_USERNAME:$UF_PASSWORD
 $SPLUNK_HOME/bin/splunk restart
 
 # Configure deploymentclient.conf
