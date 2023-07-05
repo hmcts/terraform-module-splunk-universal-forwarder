@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOWNLOAD_URL="https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-x86_64.tgz"
+<<'DOWNLOAD_URL="https://download.splunk.com/products/universalforwarder/releases/8.2.2.1/linux/splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-x86_64.tgz"
 INSTALL_FILE="splunkforwarder-8.2.2.1-ae6821b7c64b-Linux-x86_64.tgz"
 INSTALL_LOCATION="/opt"
 DEPLOYMENT_SERVER_URI="splunk-lm-prod-vm00.platform.hmcts.net:8089"
@@ -86,4 +86,4 @@ sleep 10
 $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
 chown -R splunk:splunk $SPLUNK_HOME
 
-$SPLUNK_HOME/bin/splunk start
+$SPLUNK_HOME/bin/splunk start'>>
