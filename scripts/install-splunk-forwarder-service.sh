@@ -16,6 +16,10 @@ export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 groupadd -f splunk
 id -u splunk >/dev/null 2>&1 || useradd splunk -g splunk
 
+#Initialize package 
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+sudo apt-get install -y -q
+
 # Install splunk forwarder
 curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
 tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
