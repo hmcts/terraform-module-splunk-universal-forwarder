@@ -12,6 +12,9 @@ UF_GROUP=$4
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
+#test
+export HOME="$INSTALL_LOCATION/splunkforwarder"
+
 # Create boot-start systemd user
 groupadd -f splunk
 id -u splunk >/dev/null 2>&1 || useradd splunk -g splunk
