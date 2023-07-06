@@ -20,8 +20,8 @@ groupadd -f splunk
 id -u splunk >/dev/null 2>&1 || useradd splunk -g splunk
 
 #Initialize package 
-echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
-sudo apt-get install -y -q
+echo 'debconf debconf/frontend select Noninteractive' |  debconf-set-selections
+apt-get install -y -q
 
 # Install splunk forwarder
 curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
@@ -30,7 +30,7 @@ rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
 # Grant splunk user read access to logs
-sudo apt-get install acl
+apt-get install acl
 setfacl -R -m u:splunk:r /var/log
 
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
