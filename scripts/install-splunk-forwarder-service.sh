@@ -12,26 +12,15 @@ UF_GROUP=$4
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
-#test
-export HOME="/home/wowza"
-
 # Create boot-start systemd user
 groupadd -f splunk
 id -u splunk >/dev/null 2>&1 || useradd splunk -g splunk
-
-#Initialize package 
-echo 'debconf debconf/frontend select Noninteractive' |  debconf-set-selections
-apt-get install -y -q
 
 # Install splunk forwarder
 curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
 tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
 rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
-#TEST check necessary permssions are set
-chmod -R 755 $SPLUNK_HOME
-chown -R splunk:splunk $SPLUNK_HOME/var
-
 
 # Grant splunk user read access to logs
 apt-get install acl
@@ -50,11 +39,6 @@ USERNAME = $UF_USERNAME
 HASHED_PASSWORD = $($SPLUNK_HOME/bin/splunk hash-passwd $UF_PASSWORD)
 EOF
 } > $SPLUNK_HOME/etc/system/local/user-seed.conf
-
-# TEST Create necessary directories
-mkdir -p $SPLUNK_HOME/var/log/splunk
-mkdir -p $SPLUNK_HOME/var/log/introspection
-mkdir -p $SPLUNK_HOME/var/log/watchdog
 
 $SPLUNK_HOME/bin/splunk stop
 
@@ -97,17 +81,7 @@ EOF
 
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
-#test code
-chown -Rf root. $SPLUNK_HOME
 $SPLUNK_HOME/bin/splunk disable boot-start
 sleep 10
 $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
-#test added f
-chown -Rf splunk. $SPLUNK_HOME
-#test switch to splunk user
-#su splunk
-
-#TEST - SplunkForwarder service starts with the correct user environment.
-su -s /bin/bash -c "$SPLUNK_HOME/bin/splunk start" splunk
-
-$SPLUNK_HOME/bin/splunk start
+chown -R splunk:splunk $SPLUNK_HOME
