@@ -86,6 +86,8 @@ EOF
 # EOF
 # } > $SPLUNK_HOME/etc/system/local/outputs.conf
 
+#Test - Change permission
+sudo chmod 755 $SPLUNK_HOME
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
 #test code
