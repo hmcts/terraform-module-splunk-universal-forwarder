@@ -12,6 +12,12 @@ UF_GROUP=$4
 
 export SPLUNK_HOME="$INSTALL_LOCATION/splunkforwarder"
 
+#test removing
+sudo rm -r /opt/splunkforwarder/var/log/splunk
+sudo rm -r /opt/splunkforwarder/var/log/introspection
+sudo rm -r /opt/splunkforwarder/var/log/watchdog
+
+
 #test
 export HOME="/home/wowza"
 
