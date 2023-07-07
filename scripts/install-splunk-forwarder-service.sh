@@ -28,6 +28,10 @@ curl --retry 3 -# -L -o $INSTALL_FILE $DOWNLOAD_URL
 tar xvzf $INSTALL_FILE -C $INSTALL_LOCATION
 rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
+#TEST check necessary permssions are set
+chmod -R 755 $SPLUNK_HOME
+chown -R splunk:splunk $SPLUNK_HOME/var
+
 
 # Grant splunk user read access to logs
 apt-get install acl
@@ -46,6 +50,11 @@ USERNAME = $UF_USERNAME
 HASHED_PASSWORD = $($SPLUNK_HOME/bin/splunk hash-passwd $UF_PASSWORD)
 EOF
 } > $SPLUNK_HOME/etc/system/local/user-seed.conf
+
+# TEST Create necessary directories
+mkdir -p $SPLUNK_HOME/var/log/splunk
+mkdir -p $SPLUNK_HOME/var/log/introspection
+mkdir -p $SPLUNK_HOME/var/log/watchdog
 
 $SPLUNK_HOME/bin/splunk stop
 
@@ -86,10 +95,6 @@ EOF
 # EOF
 # } > $SPLUNK_HOME/etc/system/local/outputs.conf
 
-#Test - Change permission
-sudo chmod 777 $SPLUNK_HOME
-sudo chmod 777 $SPLUNK_HOME/var/log/splunk
-
 # Create boot-start systemd service
 $SPLUNK_HOME/bin/splunk stop
 #test code
@@ -100,6 +105,9 @@ $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group
 #test added f
 chown -Rf splunk. $SPLUNK_HOME
 #test switch to splunk user
-su splunk
+#su splunk
+
+#TEST - SplunkForwarder service starts with the correct user environment.
+su -s /bin/bash -c "$SPLUNK_HOME/bin/splunk start" splunk
 
 $SPLUNK_HOME/bin/splunk start
