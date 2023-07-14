@@ -85,3 +85,4 @@ $SPLUNK_HOME/bin/splunk disable boot-start
 sleep 10
 $SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
 chown -R splunk:splunk $SPLUNK_HOME
+$SPLUNK_HOME/bin/splunk start
