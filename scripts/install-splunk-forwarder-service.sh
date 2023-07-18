@@ -23,7 +23,6 @@ rm -rf $INSTALL_FILE
 chown -R splunk:splunk $SPLUNK_HOME
 
 # Grant splunk user read access to logs
-apt-get install acl
 setfacl -R -m u:splunk:r /var/log
 
 if [  "$(systemctl is-active SplunkForwarder.service)" = "active"  ]; then
@@ -83,6 +82,6 @@ EOF
 $SPLUNK_HOME/bin/splunk stop
 $SPLUNK_HOME/bin/splunk disable boot-start
 sleep 10
-$SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -group splunk
+$SPLUNK_HOME/bin/splunk enable boot-start -systemd-managed 1 -user splunk -systemd-managed 0
 chown -R splunk:splunk $SPLUNK_HOME
 $SPLUNK_HOME/bin/splunk start
